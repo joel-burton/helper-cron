@@ -39,12 +39,12 @@ app.use(cors());
 
 app.use('*', (req, res) => {
   const created_at = now();
-  const source = req.headers['user-agent'];
+  const source = JSON.stringify(req.headers);
 
   console.log(`🚨 pinged at ${created_at}...`);
 
   Ping.create({ created_at, source }, (err, ping) => {
-    if (err || ping.length === 0) {
+    if (err || ping === null) {
       console.log('there was an error saving to database...');
     }
     console.log(ping);
