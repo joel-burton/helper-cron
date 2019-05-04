@@ -2,12 +2,14 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const express = require('express');
 const cors = require('cors');
+const moment = require('moment');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
 const { Schema } = mongoose;
 
 
+const now = () => moment().format('D MMM YYYY @ kk:mm:ss ');
 
 // *** DATABASE & SCHEMA *** //
 
@@ -34,8 +36,9 @@ const Ping = mongoose.model(
 app.use(cors());
 
 
+
 app.use('*', (req, res) => {
-  const created_at = new Date(Date.now()).toString();
+  const created_at = now();
   const source = req.headers['user-agent'];
 
   console.log(`🚨 pinged at ${created_at}...`);
